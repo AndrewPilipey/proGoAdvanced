@@ -50,7 +50,7 @@ func (s *Store) AddNewProduct() {
 
 point00:
 	fmt.Println("Введите название продукта:")
-	_, err := fmt.Scanln(&nameProduct)
+	_, err := fmt.Scan(&nameProduct)
 	if err != nil {
 		fmt.Println("Ошибка ввода названия продукта. Повторите ввод.")
 		goto point00
@@ -58,7 +58,7 @@ point00:
 
 point01:
 	fmt.Println("Введите стоимость продукта:")
-	_, err = fmt.Scanln(&costProduct)
+	_, err = fmt.Scan(&costProduct)
 	if err != nil || costProduct <= 0 {
 		fmt.Println("Ошибка ввода стоимости продукта. Повторите ввод.")
 		goto point01
@@ -70,6 +70,27 @@ point01:
 	s.Products = append(s.Products, newProduct)
 	fmt.Printf("Продукт %s стоимостью %.2f руб. добавлен в каталог.\n",
 		nameProduct, costProduct)
+
+}
+
+func (s *Store) DeleteProduct() { //возможность удаления продукта
+
+	var deleteProductRequest int
+	fmt.Println("Введите 9, если хотите удалить продукт.")
+	fmt.Println("Нажмите любую кнопку для возврата в главное меню.")
+	_, _ = fmt.Scan(&deleteProductRequest)
+	if deleteProductRequest == 9 {
+		fmt.Println("Введите номер удаляемой позиции:")
+		var deleteThisProduct int
+		_, err := fmt.Scan(&deleteThisProduct)
+		if err != nil || deleteThisProduct > len(s.Products) || deleteThisProduct < 1 {
+			fmt.Println("Не")
+		}
+		s.Products = append(s.Products[:newProduct])
+	} else {
+		fmt.Println("Мен")
+		main()
+	}
 
 }
 
@@ -97,10 +118,11 @@ func (s Store) ShowProducts(products []Product) {
 }
 
 func (s Store) AddToBasket(productNumber int) Store {
-	if productNumber > len(s.Products) {
+	if productNumber < 1 || productNumber > len(s.Products) {
 		fmt.Println("Неверный выбор продукта. Повторите ввод.")
 		return s
 	}
+
 	s.Basket = append(s.Basket, s.Products[productNumber-1])
 	fmt.Printf("Продукт %s успешно добавлен в корзину.\n",
 		s.Products[productNumber-1].Name)
@@ -178,10 +200,10 @@ point0:
 	case 1:
 	point1:
 		onlineStore.ShowCatalog()
-		fmt.Println("Выберите номер продукта.")
+		fmt.Println("Выберите номер продукта:")
 		_, _ = fmt.Scan(&productNumber)
 		onlineStore = onlineStore.AddToBasket(productNumber)
-		fmt.Printf("%-5s %-5s", "1.Продолжить выбор", "Any.Вернуться в меню.\n")
+		fmt.Printf("%-5s %-5s", "1.Продолжить выбор.", "Any.Вернуться в меню.\n")
 		_, _ = fmt.Scan(&answer)
 		if answer == 1 {
 			goto point1
@@ -215,7 +237,7 @@ point0:
 		fmt.Println("Пароль: ")
 		_, _ = fmt.Scan(&password)
 
-		if login == "admin" || password == "admin" {
+		if login == "admin" && password == "admin" {
 			onlineStore.AddNewProduct()
 			fmt.Printf("%-5s", "Any.Вернуться в меню.\n")
 			_, _ = fmt.Scan(&answer)
