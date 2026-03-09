@@ -34,13 +34,9 @@ func (e InsufficientFundsError) Error() string {
 func (e InsufficientFundsError) Unwrap() error {
 	return nil
 }
-
-//⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️
-
-// Функция, которую нужно реализовать
 func handleOrderError(err error) string {
 	if errors.Is(err, ErrOrderNotFound) {
-		return "Заказ не найден"
+		return "Заказ не найден."
 	}
 
 	var se OutOfStockError
@@ -56,7 +52,6 @@ func handleOrderError(err error) string {
 }
 
 func main() {
-	// Примеры ошибок
 	errors := []error{
 		ErrOrderNotFound,
 		OutOfStockError{Product: "Телефон", Available: 5, Requested: 10},
