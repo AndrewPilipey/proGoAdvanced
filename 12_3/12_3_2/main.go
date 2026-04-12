@@ -19,33 +19,33 @@ func main() {
 		slice := make([]int, n)
 		slice = Scan(slice)
 		result := IsSorted(slice)
-		if result == false {
-			fmt.Println("NO")
-			return
-		} else if result == true {
+		if result {
 			fmt.Println("YES")
 			return
+		} else {
+			fmt.Println("NO")
+			return
 		}
-	case "float64":
+	case "float":
 		slice := make([]float64, n)
 		slice = Scan(slice)
 		result := IsSorted(slice)
-		if result == false {
-			fmt.Println("NO")
-			return
-		} else if result == true {
+		if result {
 			fmt.Println("YES")
+			return
+		} else {
+			fmt.Println("NO")
 			return
 		}
 	case "string":
 		slice := make([]string, n)
 		slice = Scan(slice)
 		result := IsSorted(slice)
-		if result == false {
-			fmt.Println("NO")
-			return
-		} else if result == true {
+		if result {
 			fmt.Println("YES")
+			return
+		} else {
+			fmt.Println("NO")
 			return
 		}
 	}
@@ -62,7 +62,7 @@ func IsSorted[T cmp.Ordered](slice []T) bool {
 	if len(slice) == 0 || len(slice) == 1 {
 		return true
 	}
-	for i := 0; i < len(slice)-2; i++ {
+	for i := 0; i < len(slice)-1; i++ {
 		if slice[i] > slice[i+1] {
 			return false
 		}
